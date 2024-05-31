@@ -31,77 +31,94 @@ public class Patient {
 
   public static final String ACTIVE = "ACTIVE";
   public static final String INACTIVE = "INACTIVE";
+  
+  public static Patient getInstance() {
+	  return new Patient();
+  }
+  
+  public Patient build() {
+	  return Patient.this;
+  }
 
   public String getPatientId() {
     return patientId;
   }
 
-  public void setPatientId(String patientId) {
+  public Patient setPatientId(String patientId) {
     this.patientId = patientId;
+    return this;
   }
 
   public String getPatientName() {
     return patientName;
   }
 
-  public void setPatientName(String patientName) {
+  public Patient setPatientName(String patientName) {
     this.patientName = patientName;
+    return this;
   }
 
   public String getPatientNameMarathi() {
     return patientNameMarathi;
   }
 
-  public void setPatientNameMarathi(String patientNameMarathi) {
+  public Patient setPatientNameMarathi(String patientNameMarathi) {
     this.patientNameMarathi = patientNameMarathi;
+    return this;
   }
 
   public String getMobileNumber() {
     return MobileNumber;
   }
 
-  public void setMobileNumber(String mobileNumber) {
+  public Patient setMobileNumber(String mobileNumber) {
     MobileNumber = mobileNumber;
+    return this;
   }
 
   public String getGender() {
     return Gender;
   }
 
-  public void setGender(String gender) {
+  public Patient setGender(String gender) {
     Gender = gender;
+    return this;
   }
 
   public String getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(String birthDate) {
+  public Patient setBirthDate(String birthDate) {
     this.birthDate = birthDate;
+    return this;
   }
 
   public String getFirstExaminationDate() {
     return FirstExaminationDate;
   }
 
-  public void setFirstExaminationDate(String firstExaminationDate) {
+  public Patient setFirstExaminationDate(String firstExaminationDate) {
     FirstExaminationDate = firstExaminationDate;
+    return this;
   }
 
   public String getAddress() {
     return Address;
   }
 
-  public void setAddress(String address) {
+  public Patient setAddress(String address) {
     Address = address;
+    return this;
   }
 
   public String getStatus() {
     return Status;
   }
 
-  public void setStatus(String status) {
+  public Patient setStatus(String status) {
     Status = status;
+    return this;
   }
 
   @PrePersist

@@ -1,5 +1,6 @@
 package org.dnyanyog.controller;
 
+import jakarta.validation.Valid;
 import org.dnyanyog.dto.AddUserRequest;
 import org.dnyanyog.dto.UpdateUserRequest;
 import org.dnyanyog.dto.UserResponse;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.validation.Valid;
 
 @RestController
 public class UserServiceController {
@@ -28,7 +27,7 @@ public class UserServiceController {
   }
 
   @PostMapping(
-      path = "/api/v1/auth/user",
+      path = "/api/v1/directory/update",
       consumes = {"application/json", "application/xml"},
       produces = {"application/json", "application/xml"})
   public UserResponse updateUser(@Valid @RequestBody UpdateUserRequest updateUserRequest) {
@@ -36,19 +35,14 @@ public class UserServiceController {
     return userService.updateUser(updateUserRequest);
   }
 
-  
-  @DeleteMapping(
-      path = "/api/v1/directory/{userId}",
-      consumes = {"application/json", "application/xml"},
-      produces = {"application/json", "application/xml"})
+  @DeleteMapping(path = "/api/v1/directory/{userId}")
   public UserResponse deleteUser(@PathVariable String userId) {
     return userService.deleteUser(userId);
   }
-  @GetMapping("/api/v1/directory/{userId}")
+
+  @GetMapping(path = "/api/v1/directory/{userId}")
   public UserResponse getUserById(@PathVariable String userId) {
-	  
-	  return userService.getUserById(userId);
+
+    return userService.getUserById(userId);
   }
-  
-  
 }

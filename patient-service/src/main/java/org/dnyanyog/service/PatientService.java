@@ -12,6 +12,10 @@ public interface PatientService {
 	public PatientResponse updatePatient(UpdatePatientRequest updateRequest);
 	
 	public PatientResponse deletePatient(String patientId);
+	
+	public PatientResponse getPatientById(String patientId);
+	
+	
 		
 	
 }

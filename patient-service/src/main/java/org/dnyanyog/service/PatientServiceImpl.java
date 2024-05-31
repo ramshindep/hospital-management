@@ -13,10 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class PatientServiceImpl implements PatientService {
-	
-	Logger logger = LoggerFactory.getLogger(PatientService.class);
+
+  Logger logger = LoggerFactory.getLogger(PatientService.class);
 
   @Autowired PatientResponse patientResponse;
 
@@ -25,18 +26,20 @@ public class PatientServiceImpl implements PatientService {
   @Autowired Patient patientTable;
 
   public PatientResponse addPatient(AddPatientRequest addRequest) {
-    patientResponse = new PatientResponse();
 
     patientTable = new Patient();
 
-    patientTable.setPatientName(addRequest.getPatientName());
-    patientTable.setPatientNameMarathi(addRequest.getPatientNameMarathi());
-    patientTable.setGender(addRequest.getGender());
-    patientTable.setMobileNumber(addRequest.getMobileNumber());
-    patientTable.setBirthDate(addRequest.getBirthDate());
-    patientTable.setFirstExaminationDate(addRequest.getFirstExaminationDate());
-    patientTable.setAddress(addRequest.getAddress());
-    patientTable.setStatus(Patient.ACTIVE);
+    patientTable =
+        Patient.getInstance()
+            .setPatientName(addRequest.getPatientName())
+            .setPatientNameMarathi(addRequest.getPatientNameMarathi())
+            .setMobileNumber(addRequest.getMobileNumber())
+            .setFirstExaminationDate(addRequest.getFirstExaminationDate())
+            .setBirthDate(addRequest.getBirthDate())
+            .setGender(addRequest.getGender())
+            .setAddress(addRequest.getAddress())
+            .setStatus(Patient.ACTIVE)
+            .build();
 
     patientTable = patientRepo.save(patientTable);
 
@@ -53,7 +56,7 @@ public class PatientServiceImpl implements PatientService {
     patientData.setBirthDate(patientTable.getBirthDate());
     patientData.setAddress(patientTable.getAddress());
     patientData.setStatus(patientTable.getStatus());
-    
+
     patientResponse.setPatientData(patientData);
 
     return patientResponse;
@@ -67,37 +70,36 @@ public class PatientServiceImpl implements PatientService {
         patientTable = patient.get();
 
         if (updateRequest.getPatientName() != null) {
-            patientTable.setPatientName(updateRequest.getPatientName());
+          patientTable.setPatientName(updateRequest.getPatientName());
         }
 
         if (updateRequest.getPatientNameMarathi() != null) {
-            patientTable.setPatientNameMarathi(updateRequest.getPatientNameMarathi());
+          patientTable.setPatientNameMarathi(updateRequest.getPatientNameMarathi());
         }
 
         if (updateRequest.getGender() != null) {
-            patientTable.setGender(updateRequest.getGender());
+          patientTable.setGender(updateRequest.getGender());
         }
 
         if (updateRequest.getFirstExaminationDate() != null) {
-            patientTable.setFirstExaminationDate(updateRequest.getFirstExaminationDate());
+          patientTable.setFirstExaminationDate(updateRequest.getFirstExaminationDate());
         }
 
         if (updateRequest.getMobileNumber() != null) {
-            patientTable.setMobileNumber(updateRequest.getMobileNumber());
+          patientTable.setMobileNumber(updateRequest.getMobileNumber());
         }
 
         if (updateRequest.getBirthDate() != null) {
-            patientTable.setBirthDate(updateRequest.getBirthDate());
+          patientTable.setBirthDate(updateRequest.getBirthDate());
         }
 
         if (updateRequest.getAddress() != null) {
-            patientTable.setAddress(updateRequest.getAddress());
+          patientTable.setAddress(updateRequest.getAddress());
         }
 
         if (updateRequest.getStatus() != null) {
-            patientTable.setStatus(updateRequest.getStatus());
+          patientTable.setStatus(updateRequest.getStatus());
         }
-
 
         patientTable = patientRepo.save(patientTable);
         patientResponse.setStatus(ErrorCode.PATIENT_UPDATE_SUCCESS.getStatus());
@@ -105,16 +107,20 @@ public class PatientServiceImpl implements PatientService {
 
         patientResponse.setPatientId(patientTable.getPatientId());
         patientResponse.getPatientData().setPatientName(patientTable.getPatientName());
-        patientResponse .getPatientData().setPatientNameMarathi(patientTable.getPatientNameMarathi());
+        patientResponse
+            .getPatientData()
+            .setPatientNameMarathi(patientTable.getPatientNameMarathi());
         patientResponse.getPatientData().setGender(patientTable.getGender());
-        patientResponse.getPatientData().setFirstExaminationDate(patientTable.getFirstExaminationDate());
+        patientResponse
+            .getPatientData()
+            .setFirstExaminationDate(patientTable.getFirstExaminationDate());
         patientResponse.getPatientData().setMobileNumber(patientTable.getMobileNumber());
         patientResponse.getPatientData().setBirthDate(patientTable.getBirthDate());
         patientResponse.getPatientData().setAddress(patientTable.getAddress());
         patientResponse.getPatientData().setStatus(patientTable.getStatus());
 
       } catch (Exception e) {
-
+        e.printStackTrace();
       }
     } else {
       patientResponse.setStatus(ErrorCode.PATIENT_NOTFOUND.getStatus());
@@ -143,38 +149,37 @@ public class PatientServiceImpl implements PatientService {
       return (patientResponse);
     }
   }
-  
+
   public PatientResponse getPatientById(String patientId) {
-	  Optional<Patient>optionalPatient=patientRepo.findById(patientId);
-	  
-	  if(optionalPatient.isPresent()) {
-		  Patient patient=optionalPatient.get();
-		  
-		  PatientResponse patientResponse=new PatientResponse();
-		  patientResponse.setStatus(ErrorCode.PATIENT_FOUND.getStatus());
-		  patientResponse.setMessage(ErrorCode.PATIENT_FOUND.getMessage());
-		  
-		  PatientData patientData=new PatientData();
-		  patientData.setPatientId(patient.getPatientId());
-		  patientData.setPatientName(patient.getPatientName());
-		  patientData.setPatientNameMarathi(patient.getPatientNameMarathi());
-		  patientData.setGender(patient.getGender());
-		  patientData.setAddress(patient.getAddress());
-		  patientData.setBirthDate(patient.getBirthDate());
-		  patientData.setFirstExaminationDate(patient.getFirstExaminationDate());
-		  patientData.setMobileNumber(patient.getMobileNumber());
-		  patientData.setStatus(patient.getStatus());
-		  
-		  patientResponse.setPatientData(patientData);
-		  return (patientResponse);
-		  
-	  }else {
-		  PatientResponse patientResponse=new PatientResponse();
-		  patientResponse.setStatus(ErrorCode.PATIENT_FOUND.getStatus());
-		  patientResponse.setMessage(ErrorCode.PATIENT_FOUND.getMessage());
-		  
-		  return (patientResponse);
-	  }
+    Optional<Patient> optionalPatient = patientRepo.findById(patientId);
+
+    if (optionalPatient.isPresent()) {
+      Patient patient = optionalPatient.get();
+
+      PatientResponse patientResponse = new PatientResponse();
+      patientResponse.setStatus(ErrorCode.PATIENT_FOUND.getStatus());
+      patientResponse.setMessage(ErrorCode.PATIENT_FOUND.getMessage());
+
+      PatientData patientData = new PatientData();
+      patientData.setPatientId(patient.getPatientId());
+      patientData.setPatientName(patient.getPatientName());
+      patientData.setPatientNameMarathi(patient.getPatientNameMarathi());
+      patientData.setGender(patient.getGender());
+      patientData.setAddress(patient.getAddress());
+      patientData.setBirthDate(patient.getBirthDate());
+      patientData.setFirstExaminationDate(patient.getFirstExaminationDate());
+      patientData.setMobileNumber(patient.getMobileNumber());
+      patientData.setStatus(patient.getStatus());
+
+      patientResponse.setPatientData(patientData);
+      return (patientResponse);
+
+    } else {
+      PatientResponse patientResponse = new PatientResponse();
+      patientResponse.setStatus(ErrorCode.PATIENT_FOUND.getStatus());
+      patientResponse.setMessage(ErrorCode.PATIENT_FOUND.getMessage());
+
+      return (patientResponse);
+    }
   }
-  
 }

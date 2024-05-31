@@ -1,7 +1,6 @@
 package org.dnyanyog.service;
 
 import java.util.Optional;
-
 import org.dnyanyog.dto.AddUserRequest;
 import org.dnyanyog.dto.UpdateUserRequest;
 import org.dnyanyog.dto.UserData;
@@ -10,12 +9,15 @@ import org.dnyanyog.encryption.EncryptionService;
 import org.dnyanyog.entity.Users;
 import org.dnyanyog.enums.ErrorCode;
 import org.dnyanyog.repo.UsersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+  Logger logger = LoggerFactory.getLogger(UserService.class);
 
   @Autowired UsersRepository userRepo;
 
@@ -28,18 +30,19 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponse addUser(AddUserRequest addRequest) {
 
-    userTable = new Users();
-
-    userTable.setUserName(addRequest.getUserName());
-    userTable.setEmail(addRequest.getEmail());
-    userTable.setMobileNumber(addRequest.getMobileNumber());
     try {
-      userTable.setPassword(encryptionService.encrypt(addRequest.getPassword()));
+      userTable =
+          Users.getInstance()
+              .setUserName(addRequest.getUserName())
+              .setEmail(addRequest.getEmail())
+              .setMobileNumber(addRequest.getMobileNumber())
+              .setPassword(encryptionService.encrypt(addRequest.getPassword()))
+              .setStatus(Users.ACTIVE)
+              .setUserRole(addRequest.getRole()).build();
     } catch (Exception e) {
+
       e.printStackTrace();
     }
-
-    userTable.setUserRole(addRequest.getRole());
 
     userTable = userRepo.save(userTable);
     userResponse.setStatus(ErrorCode.USER_ADD_SUCCESS.getCode());
@@ -50,33 +53,58 @@ public class UserServiceImpl implements UserService {
     userResponse.getUserData().setMobileNumber(userTable.getMobileNumber());
     userResponse.getUserData().setEmail(userTable.getEmail());
     userResponse.getUserData().setPassword((userTable.getPassword()));
-    userResponse.getUserData().setMobileNumber(userTable.getMobileNumber());
     userResponse.getUserData().setRole(userTable.getUserRole());
+    userResponse.getUserData().setStatus(userTable.getStatus());
 
     return (userResponse);
   }
 
   @Override
   public UserResponse updateUser(UpdateUserRequest updateRequest) {
+    UserResponse userResponse = new UserResponse(); // Initialize UserResponse object
     Optional<Users> optionalUser = userRepo.findById(updateRequest.getUserId());
     if (optionalUser.isPresent()) {
       try {
         Users user = optionalUser.get();
-        user.setUserName(updateRequest.getUserName());
-        user.setEmail(updateRequest.getEmail());
-        user.setMobileNumber(updateRequest.getMobileNumber());
-        user.setPassword(encryptionService.encrypt(updateRequest.getPassword()));
-        user.setUserRole(updateRequest.getRole());
+        if (updateRequest.getUserName() != null) {
+          user.setUserName(updateRequest.getUserName());
+        }
+
+        if (updateRequest.getEmail() != null) {
+          user.setEmail(updateRequest.getEmail());
+        }
+
+        if (updateRequest.getMobileNumber() != null) {
+          user.setMobileNumber(updateRequest.getMobileNumber());
+        }
+
+        if (updateRequest.getPassword() != null) {
+          user.setPassword(encryptionService.encrypt(updateRequest.getPassword()));
+        }
+
+        if (updateRequest.getRole() != null) {
+          user.setUserRole(updateRequest.getRole());
+        }
+
+        if (updateRequest.getStatus() != null) {
+          user.setStatus(updateRequest.getStatus());
+        }
 
         user = userRepo.save(user);
 
         userResponse.setStatus(ErrorCode.USER_UPDATE_SUCCESS.getCode());
         userResponse.setMessage(ErrorCode.USER_UPDATE_SUCCESS.getMessage());
 
-        userResponse.getUserData().setUserId(userTable.getUserId());
-        userResponse.getUserData().setUserName(userTable.getUserName());
-        userResponse.getUserData().setMobileNumber(userTable.getMobileNumber());
-        userResponse.getUserData().setEmail(userTable.getEmail());
+        UserData userData = new UserData();
+        userData.setUserId(user.getUserId());
+        userData.setUserName(user.getUserName());
+        userData.setMobileNumber(user.getMobileNumber());
+        userData.setEmail(user.getEmail());
+        userData.setPassword(user.getPassword());
+        userData.setRole(user.getUserRole());
+        userData.setStatus(user.getStatus());
+
+        userResponse.setUserData(userData);
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -111,32 +139,36 @@ public class UserServiceImpl implements UserService {
       return (userResponse);
     }
   }
-  
+
   @Override
-  public UserResponse getUserById(@PathVariable String userId) {
-      Optional<Users> optionalUser = userRepo.findById(userId);
+  public UserResponse getUserById(String userId) {
+    Optional<Users> optionalUser = userRepo.findById(userId);
 
-      if (optionalUser.isPresent()) {
-          Users user = optionalUser.get();
+    if (optionalUser != null && optionalUser.isPresent()) {
+      Users user = optionalUser.get();
 
-          UserResponse userResponse = new UserResponse();
-          userResponse.setStatus(ErrorCode.USER_FOUND.getCode());
-          userResponse.setMessage(ErrorCode.USER_FOUND.getMessage());
+      UserResponse userResponse = new UserResponse();
+      userResponse.setStatus(ErrorCode.USER_FOUND.getCode());
+      userResponse.setMessage(ErrorCode.USER_FOUND.getMessage());
 
-          UserData  userData = userResponse.getUserData();
-          userData.setUserId(user.getUserId());
-          userData.setUserName(user.getUserName());
-          userData.setEmail(user.getEmail());
-          userData.setMobileNumber(user.getMobileNumber());
-          userData.setRole(user.getUserRole());
+      UserData userData = new UserData();
+      userData.setUserId(user.getUserId());
+      userData.setUserName(user.getUserName());
+      userData.setEmail(user.getEmail());
+      userData.setPassword(user.getPassword());
+      userData.setMobileNumber(user.getMobileNumber());
+      userData.setRole(user.getUserRole());
+      userData.setStatus(user.getStatus());
 
-          return (userResponse);
-      } else {
-          UserResponse userResponse = new UserResponse();
-          userResponse.setStatus(ErrorCode.USER_NOT_FOUND.getCode());
-          userResponse.setMessage(ErrorCode.USER_NOT_FOUND.getMessage());
+      userResponse.setUserData(userData);
 
-          return (userResponse);
-      }
+      return userResponse;
+    } else {
+      UserResponse userResponse = new UserResponse();
+      userResponse.setStatus(ErrorCode.USER_NOT_FOUND.getCode());
+      userResponse.setMessage(ErrorCode.USER_NOT_FOUND.getMessage());
+
+      return userResponse;
+    }
   }
 }
