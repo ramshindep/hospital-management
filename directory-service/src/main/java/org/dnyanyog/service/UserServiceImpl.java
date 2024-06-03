@@ -27,37 +27,49 @@ public class UserServiceImpl implements UserService {
 
   @Autowired EncryptionService encryptionService;
 
-  @Override
-  public UserResponse addUser(AddUserRequest addRequest) {
+ 
 
-    try {
-      userTable =
-          Users.getInstance()
-              .setUserName(addRequest.getUserName())
-              .setEmail(addRequest.getEmail())
-              .setMobileNumber(addRequest.getMobileNumber())
-              .setPassword(encryptionService.encrypt(addRequest.getPassword()))
-              .setStatus(Users.ACTIVE)
-              .setUserRole(addRequest.getRole()).build();
-    } catch (Exception e) {
+	  @Override
+	  public UserResponse addUser(AddUserRequest addRequest) {
+		  UserResponse userResponse = new UserResponse();
+		  UserData userData = new UserData();
+		   
+	      try {
+	          userTable = Users.getInstance()
+	                  .setUserName(addRequest.getUserName())
+	                  .setEmail(addRequest.getEmail())
+	                  .setMobileNumber(addRequest.getMobileNumber())
+	                  .setPassword(encryptionService.encrypt(addRequest.getPassword()))
+	                  .setStatus(Users.ACTIVE)
+	                  .setUserRole(addRequest.getRole()).build();
+	          
+	          System.out.println("Before saving userTable: " + userTable);
 
-      e.printStackTrace();
-    }
+	          userTable = userRepo.save(userTable);
 
-    userTable = userRepo.save(userTable);
-    userResponse.setStatus(ErrorCode.USER_ADD_SUCCESS.getCode());
-    userResponse.setMessage(ErrorCode.USER_ADD_SUCCESS.getMessage());
+	          System.out.println("After saving userTable: " + userTable);
+	          
+	          userResponse.setStatus(ErrorCode.USER_ADD_SUCCESS.getCode());
+	          userResponse.setMessage(ErrorCode.USER_ADD_SUCCESS.getMessage());
 
-    userResponse.getUserData().setUserId(userTable.getUserId());
-    userResponse.getUserData().setUserName(userTable.getUserName());
-    userResponse.getUserData().setMobileNumber(userTable.getMobileNumber());
-    userResponse.getUserData().setEmail(userTable.getEmail());
-    userResponse.getUserData().setPassword((userTable.getPassword()));
-    userResponse.getUserData().setRole(userTable.getUserRole());
-    userResponse.getUserData().setStatus(userTable.getStatus());
+	         
+	          userData.setUserId(userTable.getUserId());
+	          userData.setUserName(userTable.getUserName());
+	          userData.setMobileNumber(userTable.getMobileNumber());
+	          userData.setEmail(userTable.getEmail());
+	          userData.setPassword(userTable.getPassword());
+	          userData.setRole(userTable.getUserRole());
+	          userData.setStatus(userTable.getStatus());
 
-    return (userResponse);
-  }
+	          userResponse.setUserData(userData);
+
+	      } catch (Exception e) {
+	          e.printStackTrace();
+	      }
+
+	      return userResponse;
+	  }
+
 
   @Override
   public UserResponse updateUser(UpdateUserRequest updateRequest) {
