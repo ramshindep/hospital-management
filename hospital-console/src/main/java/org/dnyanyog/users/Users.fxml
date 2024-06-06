@@ -47,8 +47,8 @@
             <AnchorPane layoutX="30.0" layoutY="32.0" prefHeight="563.0" prefWidth="1120.0" styleClass="anchorpane-8" stylesheets="@../Style.css">
                <children>
                   <Button fx:id="addUser" layoutX="151.0" layoutY="82.0" mnemonicParsing="false" onAction="#addUser" prefHeight="40.0" prefWidth="214.0" styleClass="button-3" text="AddUser" />
-                  <Button fx:id="updateUser" layoutX="151.0" layoutY="163.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="214.0" styleClass="button-3" text="EditUser" />
-                  <Button fx:id="deleteUser" layoutX="151.0" layoutY="248.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="214.0" styleClass="button-3" text="DeleteUser" />
+                  <Button fx:id="updateUser" layoutX="151.0" layoutY="163.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="40.0" prefWidth="214.0" styleClass="button-3" text="EditUser" />
+                  <Button fx:id="deleteUser" layoutX="151.0" layoutY="248.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="40.0" prefWidth="214.0" styleClass="button-3" text="DeleteUser" />
                   <Button fx:id="searchUser" layoutX="151.0" layoutY="320.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="214.0" styleClass="button-3" text="SearchUser" />
                </children></AnchorPane>
          </children></AnchorPane>

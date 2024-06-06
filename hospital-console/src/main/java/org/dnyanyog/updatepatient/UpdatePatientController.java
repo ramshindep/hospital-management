@@ -17,6 +17,7 @@ import org.dnyanyog.updateappointment.AppointmentResponse;
 import org.dnyanyog.updateappointment.UpdateAppointmentRequest;
 import org.dnyanyog.users.Users;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class UpdatePatientController {
 	
@@ -210,6 +212,9 @@ public class UpdatePatientController {
 
 		      } else if ((statusCode == HttpStatus.SC_CONFLICT)) {
 		    	  successfulMessage.setVisible(true);
+		    	  PauseTransition pause = new PauseTransition(Duration.seconds(2));
+			        pause.setOnFinished(e -> successfulMessage.setVisible(false)); 
+			        pause.play(); 
 		      } else {
 		        System.out.println("*****Error*******");
 		        System.out.println(response.getMessage());

@@ -12,6 +12,7 @@ import org.dnyanyog.login.Login;
 import org.dnyanyog.patient.Patient;
 import org.dnyanyog.users.Users;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class AddUsersController {
 
@@ -152,7 +154,9 @@ public class AddUsersController {
             successfulMessage.setVisible(true);
             conformationMessage.setVisible(false);
             
-            
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+	        pause.setOnFinished(e -> successfulMessage.setVisible(false)); 
+	        pause.play(); 
 
           } else if ((statusCode == HttpStatus.SC_CONFLICT)) {
         	  successfulMessage.setVisible(false);
@@ -166,6 +170,9 @@ public class AddUsersController {
         }
       } else {
     	  conformationMessage.setVisible(true);
+    	  PauseTransition pause = new PauseTransition(Duration.seconds(2));
+	        pause.setOnFinished(e -> conformationMessage.setVisible(false)); 
+	        pause.play(); 
       }
     }
   }

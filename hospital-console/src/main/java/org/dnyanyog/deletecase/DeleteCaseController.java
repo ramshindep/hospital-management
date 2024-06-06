@@ -15,6 +15,7 @@ import org.dnyanyog.updatecases.CaseData;
 import org.dnyanyog.updatecases.CaseResponse;
 import org.dnyanyog.users.Users;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class DeleteCaseController {
 	@FXML private Button patient;
@@ -101,6 +103,7 @@ public class DeleteCaseController {
 	  
 	  
 	  public void search(ActionEvent event) {
+		  successfulMessage.setVisible(false);
 		    String searchValue = patientIdSearch.getText().trim();
 		    String endpoint;
 
@@ -175,7 +178,7 @@ public class DeleteCaseController {
 		  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Inactive");
 			alert.setHeaderText("Delete Case");
-			alert.setContentText("Do you want to delete ");
+			alert.setContentText("Do you want to delete Case ");
 			ButtonType okButton = new ButtonType("OK", ButtonData.OK_DONE);
 			ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(okButton, cancelButton);
@@ -192,6 +195,10 @@ public class DeleteCaseController {
 				if (statusCode >= 200
 						&& statusCode < 300) {
 					System.out.println("****Success******");
+					successfulMessage.setVisible(true);
+					 PauseTransition pause = new PauseTransition(Duration.seconds(2));
+				        pause.setOnFinished(e -> successfulMessage.setVisible(false)); 
+				        pause.play(); 
 			
 				} else {
 					System.out.println("****Error******");

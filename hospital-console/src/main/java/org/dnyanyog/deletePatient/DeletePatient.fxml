@@ -170,7 +170,7 @@
                         </TextField>
                         <AnchorPane fx:id="successfulMessage" layoutX="341.0" layoutY="507.0" prefHeight="50.0" prefWidth="489.0" visible="false">
                            <children>
-                              <Label layoutX="32.0" layoutY="16.0" prefHeight="28.0" prefWidth="314.0" styleClass="label-3" stylesheets="@../Style.css" text="Patient Updated Successfully" textFill="#189274">
+                              <Label layoutX="32.0" layoutY="16.0" prefHeight="28.0" prefWidth="314.0" styleClass="label-3" stylesheets="@../Style.css" text="Patient Deleted Successfully" textFill="#189274">
                                  <font>
                                     <Font name="Calibri Bold" size="24.0" />
                                  </font>

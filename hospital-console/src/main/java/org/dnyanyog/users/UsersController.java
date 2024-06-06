@@ -5,8 +5,10 @@ import org.dnyanyog.addusers.AddUser;
 import org.dnyanyog.appointment.Appointment;
 import org.dnyanyog.cases.Cases;
 import org.dnyanyog.dashboard.Dashboard;
+import org.dnyanyog.deleteUser.DeleteUser;
 import org.dnyanyog.login.Login;
 import org.dnyanyog.patient.Patient;
+import org.dnyanyog.updateusers.UpdateUser;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,11 +81,11 @@ public class UsersController {
 	}
 
 	public void updateUser(ActionEvent event) {
-		
+		new UpdateUser().show();
 	}
 	
 	public void deleteUser(ActionEvent event) {
-		
+		new DeleteUser().show();
 	}
 	
 	

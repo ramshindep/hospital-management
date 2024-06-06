@@ -4,8 +4,10 @@ import org.dnyanyog.addcases.AddCases;
 
 import org.dnyanyog.appointment.Appointment;
 import org.dnyanyog.dashboard.Dashboard;
+import org.dnyanyog.deletecase.DeleteCase;
 import org.dnyanyog.login.Login;
 import org.dnyanyog.patient.Patient;
+import org.dnyanyog.updatecases.UpdateCases;
 import org.dnyanyog.users.Users;
 
 import javafx.event.ActionEvent;
@@ -85,10 +87,10 @@ public class CasesController {
 	}
 
 	public void updateCases(ActionEvent event) {
-		
+		new UpdateCases().show();
 	}
 	
 	public void deleteCases(ActionEvent event) {
-		
+		new DeleteCase().show();
 	}
 }

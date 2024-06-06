@@ -10,7 +10,10 @@ public class ApiEndPoint {
 	// Directory Service
 	public final static String LOGIN = DIRECTORY_BASE + "/api/v1/directory/validate";
 	public final static String ADDUSERS = DIRECTORY_BASE + "/api/v1/directory/add";
-	public final static String UPDATE=DIRECTORY_BASE + "/api/v1/directory/update";
+	public final static String UPDATEUSERS=DIRECTORY_BASE + "/api/v1/directory/update";
+	public final static String GET_USERBY_USERID=DIRECTORY_BASE+ "/api/v1/directory/{userId}";
+	public final static String DELETE_USER=DIRECTORY_BASE+"/api/v1/directory/{userId}";
+	
 
 
 	

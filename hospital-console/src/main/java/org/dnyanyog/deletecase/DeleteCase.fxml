@@ -112,7 +112,7 @@
                         </Label>
                         <AnchorPane fx:id="successfulMessage" layoutX="345.0" layoutY="474.0" prefHeight="50.0" prefWidth="400.0" visible="false">
                            <children>
-                              <Label layoutX="84.0" layoutY="11.0" prefHeight="28.0" prefWidth="276.0" styleClass="label-3" stylesheets="@../Style.css" text="Case Updated Successfully" textFill="#189274">
+                              <Label layoutX="84.0" layoutY="11.0" prefHeight="28.0" prefWidth="276.0" styleClass="label-3" stylesheets="@../Style.css" text="Case deleted Successfully" textFill="#189274">
                                  <font>
                                     <Font name="Calibri Bold" size="24.0" />
                                  </font>

@@ -15,6 +15,7 @@ import org.dnyanyog.updateappointment.AppointmentData;
 import org.dnyanyog.updateappointment.AppointmentResponse;
 import org.dnyanyog.users.Users;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,6 +25,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class DeleteAppointmentController {
 	
@@ -99,6 +101,8 @@ public class DeleteAppointmentController {
 	  
 	  
 	  public void search(ActionEvent event) {
+		  
+		  successfulMessage.setVisible(false);
 		    String searchValue = appointmentId.getText().trim();
 		    String endpoint;
 
@@ -127,7 +131,7 @@ public class DeleteAppointmentController {
 		        System.out.println("*****Success*******");
 		      AppointmentData    appointmentData = response.getAppointmentData();
 		        
-		      
+		       
 		        patientName.setText(appointmentData.getPatientName());
 		        String examinationDateStr = appointmentData.getExaminationDate();
 		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -146,7 +150,7 @@ public class DeleteAppointmentController {
 	  public void delete (ActionEvent event) {
 		  String endpoint;
 		  
-		  String searchValue = appointmentId.getText().trim();
+		  String searchValue = appointmentIdtext.getText().trim();
 		  
 		  if (searchValue.isEmpty()) {
 		        System.out.println("Please provide a appointment Id.");
@@ -173,6 +177,10 @@ public class DeleteAppointmentController {
 				if (statusCode >= 200
 						&& statusCode < 300) {
 					System.out.println("****Success******");
+					successfulMessage.setVisible(true);
+					 PauseTransition pause = new PauseTransition(Duration.seconds(2));
+				        pause.setOnFinished(e -> successfulMessage.setVisible(false)); 
+				        pause.play(); 
 			
 				} else {
 					System.out.println("****Error******");

@@ -16,6 +16,7 @@ import org.dnyanyog.updatepatient.PatientData;
 import org.dnyanyog.updatepatient.PatientResponse;
 import org.dnyanyog.users.Users;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class DeletePatientController {
 	@FXML private Button patient;
@@ -109,6 +111,7 @@ private RestAPIClient<PatientResponse> apiClient = new RestAPIClient<>();
 	  
 	  
    public void search(ActionEvent event) {
+	   successfulMessage.setVisible(false);
 	    String searchValue = patientIdsearch.getText().trim();
 	    String endpoint;
 
@@ -189,7 +192,7 @@ private RestAPIClient<PatientResponse> apiClient = new RestAPIClient<>();
 		  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Inactive");
 			alert.setHeaderText("Delete Patient");
-			alert.setContentText("Do you want to patient ");
+			alert.setContentText("Do you want to Delete patient ");
 			ButtonType okButton = new ButtonType("OK", ButtonData.OK_DONE);
 			ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(okButton, cancelButton);
@@ -206,6 +209,10 @@ private RestAPIClient<PatientResponse> apiClient = new RestAPIClient<>();
 				if (statusCode >= 200
 						&& statusCode < 300) {
 					System.out.println("****Success******");
+					successfulMessage.setVisible(true);
+					 PauseTransition pause = new PauseTransition(Duration.seconds(2));
+				        pause.setOnFinished(e -> successfulMessage.setVisible(false)); 
+				        pause.play(); 
 			
 				} else {
 					System.out.println("****Error******");

@@ -4,7 +4,9 @@ import org.dnyanyog.addpatient.AddPatient;
 import org.dnyanyog.appointment.Appointment;
 import org.dnyanyog.cases.Cases;
 import org.dnyanyog.dashboard.Dashboard;
+import org.dnyanyog.deletePatient.DeletePatient;
 import org.dnyanyog.login.Login;
+import org.dnyanyog.updatepatient.UpdatePatient;
 import org.dnyanyog.users.Users;
 
 import javafx.event.ActionEvent;
@@ -84,11 +86,11 @@ public class PatientController {
 	}
 
 	public void updatePatient(ActionEvent event) {
-		
+		new UpdatePatient().show();
 	}
 	
 	public void deletePatient(ActionEvent event) {
-		
+		new DeletePatient().show();
 	}
 	
 	
