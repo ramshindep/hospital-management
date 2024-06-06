@@ -118,9 +118,9 @@ public class UpdatePatientController {
 	    } else {
 	        searchValue = patientNamesearch.getText().trim();
 	        if (!searchValue.isEmpty()) {
-	            endpoint = ApiEndPoint.SEARCHPATIENT_BYPATIENTID.replace("{patientId}", searchValue);
+	            endpoint = ApiEndPoint.SEARCH_PATIENT_BY_PATIENTNAME.replace("{patientName}", searchValue);
 	        } else {
-	            System.out.println("Please provide either patient ID or patient ID.");
+	            System.out.println("Please provide either PatientName or patient ID.");
 	            return;
 	        }
 	    }

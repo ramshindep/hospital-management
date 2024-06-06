@@ -31,6 +31,7 @@ public class ApiEndPoint {
 	public final static String UPDATEPATIENT=PATIENT_BASE+"/api/v1/patient/update";
 	public final static String SEARCHPATIENT_BYPATIENTID=PATIENT_BASE +"/api/v1/patient/{patientId}";
 	public final static String DELETE_PATIENT_BY_PATIENTID=PATIENT_BASE+"/api/v1/patient/{patientId}";
+	public final static String SEARCH_PATIENT_BY_PATIENTNAME=PATIENT_BASE+"/api/v1/patient/patientName/{patientName}";
 	
 	
 	//APPOINTMENT-SERVICE

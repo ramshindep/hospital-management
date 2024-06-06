@@ -176,8 +176,45 @@ public class PatientServiceImpl implements PatientService {
 
     } else {
       PatientResponse patientResponse = new PatientResponse();
+      patientResponse.setStatus(ErrorCode.PATIENT_NOTFOUND.getStatus());
+      patientResponse.setMessage(ErrorCode.PATIENT_NOTFOUND.getMessage());
+
+      return (patientResponse);
+    }
+  }
+  
+
+  public PatientResponse getPatientByPatientName(String patientName) {
+
+    Optional<Patient> OptionalPatient = patientRepo.findByPatientName(patientName);
+    
+    System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+OptionalPatient);
+    if (OptionalPatient.isPresent()) {
+      Patient patient = OptionalPatient.get();
+
+      PatientResponse patientResponse = new PatientResponse();
       patientResponse.setStatus(ErrorCode.PATIENT_FOUND.getStatus());
       patientResponse.setMessage(ErrorCode.PATIENT_FOUND.getMessage());
+
+      PatientData patientData = new PatientData();
+      patientData.setPatientId(patient.getPatientId());
+      patientData.setPatientName(patient.getPatientName());
+      patientData.setPatientNameMarathi(patient.getPatientNameMarathi());
+      patientData.setGender(patient.getGender());
+      patientData.setAddress(patient.getAddress());
+      patientData.setBirthDate(patient.getBirthDate());
+      patientData.setFirstExaminationDate(patient.getFirstExaminationDate());
+      patientData.setMobileNumber(patient.getMobileNumber());
+      patientData.setStatus(patient.getStatus());
+
+      patientResponse.setPatientData(patientData);
+      return (patientResponse);
+
+    } else {
+
+      PatientResponse patientResponse = new PatientResponse();
+      patientResponse.setStatus(ErrorCode.PATIENT_NOTFOUND.getStatus());
+      patientResponse.setMessage(ErrorCode.PATIENT_NOTFOUND.getMessage());
 
       return (patientResponse);
     }

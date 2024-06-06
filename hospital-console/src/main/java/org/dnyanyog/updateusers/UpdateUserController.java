@@ -1,9 +1,6 @@
 package org.dnyanyog.updateusers;
 
-
-
 import org.apache.http.HttpStatus;
-
 import org.dnyanyog.appointment.Appointment;
 import org.dnyanyog.cases.Cases;
 import org.dnyanyog.common.ApiEndPoint;
@@ -12,9 +9,7 @@ import org.dnyanyog.common.RestAPIClient;
 import org.dnyanyog.dashboard.Dashboard;
 import org.dnyanyog.login.Login;
 import org.dnyanyog.patient.Patient;
-
 import org.dnyanyog.users.Users;
-
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

@@ -120,7 +120,7 @@ private RestAPIClient<PatientResponse> apiClient = new RestAPIClient<>();
 	    } else {
 	        searchValue = patientNamesearch.getText().trim();
 	        if (!searchValue.isEmpty()) {
-	            endpoint = ApiEndPoint.SEARCHPATIENT_BYPATIENTID.replace("{patientId}", searchValue);
+	            endpoint = ApiEndPoint.SEARCH_PATIENT_BY_PATIENTNAME.replace("{patientName}", searchValue);
 	        } else {
 	            System.out.println("Please provide either patient ID or patient ID.");
 	            return;

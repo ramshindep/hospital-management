@@ -46,4 +46,11 @@ public class PatientController {
 	  public PatientResponse getPatient(@PathVariable String patientId) {
 		  return patientService.getPatientById(patientId);
 	  }
+	  
+	  @GetMapping(path="/api/v1/patient/patientName/{patientName}")
+	  public PatientResponse getPatientByPatientName(@PathVariable String patientName) {
+		  return patientService.getPatientByPatientName(patientName);
+	  }
+	  
+	  
 }

@@ -15,7 +15,7 @@ public interface PatientService {
 	
 	public PatientResponse getPatientById(String patientId);
 	
-	
+	public PatientResponse getPatientByPatientName(String patientName);
 		
 	
 }
